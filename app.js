@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("node:path");
+const appRouter = require("./routes/appRouter");
 const { neon } = require("@neondatabase/serverless");
 require("dotenv/config");
 
@@ -13,7 +14,7 @@ app.use(express.json());
 
 const PORT = 3000;
 
-// app.use('/', appRouter);
+app.use('/', appRouter);
 
 app.listen(PORT, (err) => {
     if (err) {
