@@ -10,6 +10,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
+// for serving static files/images
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.json());
 
 const PORT = 3000;
