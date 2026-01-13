@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="succulent">
+            <img id="img_url" src="<%= s.image_url %>" alt="<%= s.image_url %>" width="500">
+            <p id="img_url_src">Image source: <a href="<%= s.image_url_src %>" target="_blank">Here</a></p>
+            <p id="s_name"><strong>Name: </strong><%= s.name %><br></p>
+            <p id="s_species"><strong>Species: </strong><%= s.species %><br></p>
+            <p id="s_genus"><strong>Genus: </strong><%= s.genus %><br></p>
+            <p id="s_price"><strong>Price: </strong>$<%= s.price %></p>
+            <p id="s_desc"><strong>Description: </strong><%= s.description %></p>
+        </div>
+    </body>
+</html>

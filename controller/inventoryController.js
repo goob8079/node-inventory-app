@@ -8,7 +8,21 @@ async function succulentsHomepageGet(req, res) {
     });
 }
 
+async function viewSucculentInfoGet(req, res) {
+    const id = req.params.id;
+    const succulent = await db.getSucculent(id);
+    if (!succulent) {
+        return res.status(404).send('Succulent not found!');
+    }
+
+    res.render('succulent', {
+        title: succulent.name,
+        s: succulent,
+    })
+}
+
 module.exports = {
     succulentsHomepageGet,
-
+    viewSucculentInfoGet,
+    
 }

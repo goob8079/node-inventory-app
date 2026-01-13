@@ -5,7 +5,13 @@ async function getAllSucculents() {
     return rows;
 }
 
+async function getSucculent(id) {
+    const { rows } = await pool.query("SELECT * FROM succulents WHERE id = ($1)", [id]);
+    return rows[0];
+}
+
 module.exports = {
     getAllSucculents,
-    
+    getSucculent,
+
 }

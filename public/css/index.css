@@ -1,0 +1,35 @@
+body {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    margin: 0 auto;
+    max-width: 90vw; height: 100%;
+}
+
+.plants-holder {
+    display: grid; justify-content: center; align-items: center; gap: 1rem;
+    margin: 0 auto;
+}
+
+.plant {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+
+    img {
+        width: 90%; max-width: 500px;
+        height: 400px; max-height: 400px;
+    }
+}
+
+.plant:hover {
+    background-color: #e4e4e4;
+}
+
+@media (min-width: 600px) {
+    .plants-holder { 
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media (min-width: 900px) {
+    .plants-holder {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
