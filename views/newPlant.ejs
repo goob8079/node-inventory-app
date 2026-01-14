@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add new plant</title>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <a href="/">Back to homepage</a>
+        <div class="error-msg">
+            <% if (errors) { %>
+                <ul>
+                    <% errors.forEach(e => { %>
+                        <li><%= e.msg %></li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </div>
+        <form action="/newPlant" method="POST">
+            <label for="plant-name">Name:</label>
+            <input type="text" id="plant-name" name="plant-name" value="<%= old?.['plant-name']  || '' %>"><br>
+            <label for="plant-species">Species:</label>
+            <input type="text" id="plant-species" name="plant-species" value="<%= old?.['plant-species']  || '' %>"><br>
+            <label for="plant-genus">Genus:</label>
+            <input type="text" id="plant-genus" name="plant-genus" value="<%= old?.['plant-genus']  || '' %>"><br>
+            <label for="plant-description">Description:</label>
+            <textarea name="plant-description" id="plant-description" cols="20"><%= old?.['plant-description'] || '' %></textarea><br>
+            <button type="submit">Add</button>
+        </form>
+    </body>
+</html>

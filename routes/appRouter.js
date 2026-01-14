@@ -5,6 +5,11 @@ const router = Router();
 
 router.get('/', inventoryController.succulentsHomepageGet);
 router.get('/succulent/:id', inventoryController.viewSucculentInfoGet);
+router.get('/newPlant', inventoryController.newPlantGet);
+router.post('/newPlant', 
+    inventoryController.validatePlant,
+    inventoryController.newPlantPost
+);
 router.post('/delete/:id', 
     inventoryController.validatePassword,
     inventoryController.deleteSucculentPost

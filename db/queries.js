@@ -14,8 +14,13 @@ async function deleteSucculent(id) {
     await pool.query("DELETE FROM succlents WHERE id = ($1)", [id]); 
 }
 
+async function addPlant(name, species, genus, description) {
+    await pool.query("INSERT INTO succulents (name, species, genus, description) VALUES ($1, $2, $3, $4)", [name, species, genus, description]);
+}
+
 module.exports = {
     getAllSucculents,
     getSucculent,
     deleteSucculent,
+    addPlant,
 }
