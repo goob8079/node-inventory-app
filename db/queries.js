@@ -10,8 +10,12 @@ async function getSucculent(id) {
     return rows[0];
 }
 
+async function deleteSucculent(id) {
+    await pool.query("DELETE FROM succlents WHERE id = ($1)", [id]); 
+}
+
 module.exports = {
     getAllSucculents,
     getSucculent,
-
+    deleteSucculent,
 }

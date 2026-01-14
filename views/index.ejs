@@ -5,20 +5,41 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Succulents</title>
         <link rel="stylesheet" href="../css/index.css">
+        <script src="../scripts/popup.js"></script>
     </head>
     <body>
         <h1><%= title %></h1>
+        <a id="new-plant" href="/new-plant"><button>Create new plant listing</button></a>
         <div class="plants-holder">
             <%if (succulents.length === 0) { %>
                 <p>No Succulents found.</p>
             <% } else { %>
                 <% succulents.forEach(s => { %>
-                    <a href="/succulent/<%= s.id %>" style="text-decoration: none; color: black;">
-                        <div class="plant">
+                    <div class="plant">
+                        <a href="/succulent/<%= s.id %>" style="text-decoration: none; color: black;">
                             <img id="img_url" src="<%= s.image_url %>" alt="<%= s.image_url %>">
-                            <p id="s_name"><strong><%= s.name %></strong></p>
+                        </a>
+                        <p id="s_name"><strong><%= s.name %></strong></p>
+                        <button class="delete-btn" onclick="passwordPopup(this)">Delete</button>
+                        <div class="overlay" onclick="closePopup(this)" style="<%= failedId == s.id ? 'display:block' : '' %>"></div>
+                        <div class="popup" style="<%= failedId == s.id ? 'display:block' : '' %>">
+                            <button id="close-popup" onclick="closePopup()">X</button>
+                            <form action="/delete/<%= s.id %>" method="POST">
+                                <label for="password-input">Enter password to delete: </label>
+                                <input type="text" name="password-input" required>
+                                <div class="error">
+                                    <% if (errors && failedId == s.id) { %>
+                                        <ul>
+                                            <% errors.forEach(e => { %>
+                                                <li><%= e.msg %></li>
+                                            <% }) %>
+                                        </ul>
+                                    <% } %>
+                                </div>
+                                <button type="submit">Delete</button>
+                            </form>
                         </div>
-                    </a>
+                    </div>
                 <% }) %>
             <% } %>
         </div>
