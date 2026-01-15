@@ -10,6 +10,15 @@
     <body>
         <h1><%= title %></h1>
         <a id="new-plant" href="/newPlant"><button>Create new plant listing</button></a>
+        <form action="/" method="GET">
+            <label for="categories">Sort by:</label>
+            <select name="categories" id="categories" onchange="this.form.submit()">
+                <option value="name" <%= selected === 'name' ? 'selected' : '' %>>Name</option>
+                <option value="species" <%= selected === 'species' ? 'selected' : '' %>>Species</option>
+                <option value="genus" <%= selected === 'genus' ? 'selected' : '' %>>Genus</option>
+                <option value="price" <%= selected === 'price' ? 'selected' : '' %>>Price (lowest first)</option>
+            </select>
+        </form>
         <div class="plants-holder">
             <%if (succulents.length === 0) { %>
                 <p>No Succulents found.</p>
@@ -26,8 +35,8 @@
                         <div class="popup" style="<%= failedId == s.id ? 'display:block' : '' %>">
                             <button id="close-popup" onclick="closePopup()">X</button>
                             <form action="/delete/<%= s.id %>" method="POST">
-                                <label for="password-input">Enter password to delete: </label>
-                                <input type="text" name="password-input" required>
+                                <label for="delete-password">Enter password to delete: </label>
+                                <input type="text" name="delete-password" required>
                                 <div class="error">
                                     <% if (errors && failedId == s.id) { %>
                                         <ul>

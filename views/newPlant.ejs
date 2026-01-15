@@ -61,8 +61,8 @@
             <div class="popup">
                 <button id="close-popup" onclick="closePopup()">X</button>
                 <form action="/newPlant" method="POST">
-                    <label for="password-input">Enter password to add plant: </label>
-                    <input type="text" name="password-input" required>
+                    <label for="plant-password">Enter password to add plant: </label>
+                    <input type="text" name="plant-password" required>
                     <div class="error">
                         <% if (errors) { %>
                             <% const invalidPasswordMsg = errors.find(e => e.msg === 'Invalid password'); %>

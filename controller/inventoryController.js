@@ -5,13 +5,21 @@ require('dotenv/config');
 const alphErr = 'must only contain letters!';
 const lenErr = 'must be between 1 and 30 characters!';
 
-const validatePassword = body('password-input')
+const validateDeletePassword = body('delete-password')
     .custom(value => {
         if (value !== process.env.DELETE_PASSWORD) {
             throw new Error('Invalid password');
         }
         return true;
     });
+
+const validatePlantPassword = body('plant-password')
+    .customSanitizer(value => {
+        if (value !== process.env.ADD_PLANT_PASSWORD) {
+            throw new Error('Invalid password');
+        }
+        return true;
+    })
 
 const validatePlant = [
     body('plant-name').trim()
@@ -30,10 +38,12 @@ const validatePlant = [
 ];
 
 async function succulentsHomepageGet(req, res) {
-    const succulents = await db.getAllSucculents();
+    const sort = req.query.categories || 'name'; // set name as default value
+    const succulents = await db.orderPlants(sort);
     res.render('index', {
         title: 'Available Succulents',
         succulents: succulents,
+        selected: sort, // to keep dropdown item selected
         errors: [],
         failedId: null,
     });
@@ -96,6 +106,7 @@ module.exports = {
     deleteSucculentPost,
     newPlantGet,
     newPlantPost,
-    validatePassword,
+    validateDeletePassword,
+    validatePlantPassword,
     validatePlant,
 }

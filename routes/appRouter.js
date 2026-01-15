@@ -8,11 +8,11 @@ router.get('/succulent/:id', inventoryController.viewSucculentInfoGet);
 router.get('/newPlant', inventoryController.newPlantGet);
 router.post('/newPlant', 
     inventoryController.validatePlant,
-    inventoryController.validatePassword,
+    inventoryController.validatePlantPassword,
     inventoryController.newPlantPost
 );
 router.post('/delete/:id', 
-    inventoryController.validatePassword,
+    inventoryController.validateDeletePassword,
     inventoryController.deleteSucculentPost
 );
 
