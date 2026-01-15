@@ -20,7 +20,8 @@
                             <img id="img_url" src="<%= s.image_url %>" alt="<%= s.image_url %>">
                         </a>
                         <p id="s_name"><strong><%= s.name %></strong></p>
-                        <button class="delete-btn" onclick="passwordPopup(this)">Delete</button>
+                        <button class="delete-btn" onclick="openPopup(this)">Delete</button>
+
                         <div class="overlay" onclick="closePopup(this)" style="<%= failedId == s.id ? 'display:block' : '' %>"></div>
                         <div class="popup" style="<%= failedId == s.id ? 'display:block' : '' %>">
                             <button id="close-popup" onclick="closePopup()">X</button>
@@ -31,7 +32,7 @@
                                     <% if (errors && failedId == s.id) { %>
                                         <ul>
                                             <% errors.forEach(e => { %>
-                                                <li><%= e.msg %></li>
+                                                <li style="color: red;"><%= e.msg %></li>
                                             <% }) %>
                                         </ul>
                                     <% } %>

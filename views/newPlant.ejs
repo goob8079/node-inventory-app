@@ -4,29 +4,76 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add new plant</title>
+        <link rel="stylesheet" href="../css/newPlant.css">
+        <script src="../scripts/popup.js"></script>
     </head>
     <body>
         <h1><%= title %></h1>
-        <a href="/">Back to homepage</a>
-        <div class="error-msg">
-            <% if (errors) { %>
-                <ul>
-                    <% errors.forEach(e => { %>
-                        <li><%= e.msg %></li>
-                    <% }) %>
-                </ul>
-            <% } %>
-        </div>
+        <a href="/" id="homepage"><button>Back to homepage</button></a>
+
+        <!-- this function lets each error be correctly mapped to its corresponding element -->
+        <% 
+            function fieldErrors(name) { 
+                if (!errors) return [];
+                return errors.filter(e => e.path === name);
+            }
+        %>
+
         <form action="/newPlant" method="POST">
-            <label for="plant-name">Name:</label>
-            <input type="text" id="plant-name" name="plant-name" value="<%= old?.['plant-name']  || '' %>"><br>
-            <label for="plant-species">Species:</label>
-            <input type="text" id="plant-species" name="plant-species" value="<%= old?.['plant-species']  || '' %>"><br>
-            <label for="plant-genus">Genus:</label>
-            <input type="text" id="plant-genus" name="plant-genus" value="<%= old?.['plant-genus']  || '' %>"><br>
-            <label for="plant-description">Description:</label>
-            <textarea name="plant-description" id="plant-description" cols="20"><%= old?.['plant-description'] || '' %></textarea><br>
-            <button type="submit">Add</button>
+            <label for="plant-name" class="plant-input">Name:
+                <input type="text" id="plant-name" name="plant-name" value="<%= old?.['plant-name']  || '' %>">
+            </label>
+            <% fieldErrors('plant-name').forEach(e => { %>
+                <div class="field-error"><%= e.msg %></div>
+            <% }) %><br>
+
+            <label for="plant-species" class="plant-input">Species:
+                <input type="text" id="plant-species" name="plant-species" value="<%= old?.['plant-species']  || '' %>">
+            </label>
+            <% fieldErrors('plant-species').forEach(e => { %>
+                <div class="field-error"><%= e.msg %></div>
+            <% }) %><br>
+
+            <label for="plant-genus" class="plant-input">Genus:
+                <input type="text" id="plant-genus" name="plant-genus" value="<%= old?.['plant-genus']  || '' %>">
+            </label>
+            <% fieldErrors('plant-genus').forEach(e => { %>
+                <div class="field-error"><%= e.msg %></div>
+            <% }) %><br>
+
+            <label for="plant-price" class="plant-input">Price:
+                <input type="number" id="plant-price" name="plant-price" value="<%= old?.['plant-price']  || '' %>">
+            </label>
+            <% fieldErrors('plant-price').forEach(e => { %>
+                <div class="field-error"><%= e.msg %></div>
+            <% }) %><br>
+
+            <label for="plant-description" class="plant-input">Description:
+                <textarea name="plant-description" id="plant-description" cols="20"><%= old?.['plant-description'] || '' %></textarea>
+            </label>
+            <% fieldErrors('plant-description').forEach(e => { %>
+                <div class="field-error"><%= e.msg %></div>
+            <% }) %><br>
+        
+            <button type="submit" id="add-btn" onclick="openPopup()">Add</button>
+
+            <div class="overlay" onclick="closePopup()"></div>
+            <div class="popup">
+                <button id="close-popup" onclick="closePopup()">X</button>
+                <form action="/newPlant" method="POST">
+                    <label for="password-input">Enter password to add plant: </label>
+                    <input type="text" name="password-input" required>
+                    <div class="error">
+                        <% if (errors) { %>
+                            <% const invalidPasswordMsg = errors.find(e => e.msg === 'Invalid password'); %>
+                            <% if (invalidPasswordMsg) { %>
+                                <p style="color: red;"><%= invalidPasswordMsg.msg %></p>
+                            <% } %>
+                        <% } %>
+                    </div>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
         </form>
     </body>
 </html>

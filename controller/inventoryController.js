@@ -3,7 +3,7 @@ const db = require("../db/queries");
 require('dotenv/config');
 
 const alphErr = 'must only contain letters!';
-const lenErr = 'must be between 1 and 30 characters';
+const lenErr = 'must be between 1 and 30 characters!';
 
 const validatePassword = body('password-input')
     .custom(value => {
@@ -23,8 +23,10 @@ const validatePlant = [
     body('plant-genus').trim()
         .matches(/^[a-zA-Z_]+$/).withMessage(`Genus ${alphErr}`)
         .isLength({ min: 1, max: 40 }).withMessage(`Genus ${lenErr}`),
+    body('plant-price').trim()
+        .isFloat({ min: 0 }).withMessage('Price must be greater than 0!'),
     body('plant-description').trim()
-        .isLength({ min: 1, max: 500 }).withMessage(`Description ${lenErr}`),
+        .isLength({ min: 1, max: 500 }).withMessage('Description must be between 1 and 500 characters!'),
 ];
 
 async function succulentsHomepageGet(req, res) {
@@ -84,7 +86,7 @@ async function newPlantPost(req, res) {
             old: req.body,
         });
     }
-    
+
     res.send('Hello');
 }
 

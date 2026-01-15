@@ -1,6 +1,6 @@
 const deleteBtn = document.querySelector("#delete-btn");
 
-function passwordPopup() {
+function openPopup() {
     document.querySelector(".overlay").style.display = "block";
     document.querySelector(".popup").style.display = "block";
 }
