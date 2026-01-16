@@ -1,10 +1,7 @@
 const express = require("express");
 const path = require("node:path");
 const appRouter = require("./routes/appRouter");
-
-if (process.env.NODE_ENV !== 'production') {
-    require("dotenv").config();
-}
+require("dotenv/config");
 
 const app = express();
 
@@ -16,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-// app.use('/', appRouter);
+app.use('/', appRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, '0.0.0.0', (err) => {
