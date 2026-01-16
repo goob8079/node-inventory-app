@@ -9,12 +9,12 @@
       <li>EJS</li>
       <li>CSS</li>
     </ul>
-  <li>Frameworks</li>
+  <li><h3>Frameworks</h3></li>
     <ul>
       <li>Node.js</li>
       <li>Express.js</li>
     </ul>
-  <li>Database</li>
+  <li><h3>Database</h3></li>
     <ul>
       <li>PostgreSQL</li>
       <li>Neon</li>
