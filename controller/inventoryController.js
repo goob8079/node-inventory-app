@@ -14,7 +14,7 @@ const validateDeletePassword = body('delete-password')
     });
 
 const validatePlantPassword = body('plant-password')
-    .customSanitizer(value => {
+    .custom(value => {
         if (value !== process.env.ADD_PLANT_PASSWORD) {
             throw new Error('Invalid password');
         }
