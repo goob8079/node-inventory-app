@@ -11,7 +11,7 @@ async function getSucculent(id) {
 }
 
 async function deleteSucculent(id) {
-    await pool.query("DELETE FROM succlents WHERE id = ($1)", [id]); 
+    await pool.query("DELETE FROM succulents WHERE id = ($1)", [id]); 
 }
 
 async function addPlant(name, species, genus, description) {
