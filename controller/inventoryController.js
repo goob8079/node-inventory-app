@@ -8,7 +8,7 @@ const lenErr = 'must be between 1 and 30 characters!';
 const validateDeletePassword = body('delete-password')
     .custom(value => {
         if (value !== process.env.DELETE_PASSWORD) {
-            throw new Error('Invalid password');
+            return Promise.reject('Invalid password');
         }
         return true;
     });
@@ -16,7 +16,7 @@ const validateDeletePassword = body('delete-password')
 const validatePlantPassword = body('plant-password')
     .custom(value => {
         if (value !== process.env.ADD_PLANT_PASSWORD) {
-            throw new Error('Invalid password');
+            return Promise.reject('Invalid password');
         }
         return true;
     })
@@ -66,10 +66,13 @@ async function deleteSucculentPost(req, res) {
     const errs = validationResult(req);
     const id = req.params.id;
     if (!errs.isEmpty()) {
+        const sort = req.query.categories || 'name';
         const succulents = await db.getAllSucculents();
+
         return res.status(400).render('index', {
             title: 'Available Succulents',
             succulents: succulents,
+            selected: sort,
             errors: errs.array(),
             failedId: id,
         });
@@ -97,7 +100,8 @@ async function newPlantPost(req, res) {
         });
     }
 
-    res.send('Hello');
+    await db.addPlant(req.body.name, req.body.species, req.body.genus, req.body.description)
+    res.redirect('/');
 }
 
 module.exports = {
