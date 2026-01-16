@@ -14,11 +14,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.json());
 
-const PORT = 3000;
-
 app.use('/', appRouter);
 
-app.listen(PORT, (err) => {
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, '0.0.0.0', (err) => {
     if (err) {
         throw err;
     }
