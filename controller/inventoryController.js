@@ -1,4 +1,4 @@
-const { body, validationResult, matchedData } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const db = require("../db/queries");
 require('dotenv/config');
 
@@ -40,12 +40,21 @@ const validatePlant = [
 async function succulentsHomepageGet(req, res) {
     const sort = req.query.categories || 'name'; // set name as default value
     const succulents = await db.orderPlants(sort);
+
+    let errors = [];
+    let failedId = null;
+
+    if (req.query.deleteError) {
+        errors = [{ msg: 'Invalid Password' }];
+        failedId = req.query.failedId;
+    }
+
     res.render('index', {
         title: 'Available Succulents',
         succulents: succulents,
         selected: sort, // to keep dropdown item selected
-        errors: [],
-        failedId: null,
+        errors: errors,
+        failedId: failedId,
     });
 }
 
@@ -65,17 +74,10 @@ async function viewSucculentInfoGet(req, res) {
 async function deleteSucculentPost(req, res) {
     const errs = validationResult(req);
     const id = req.params.id;
+    
     if (!errs.isEmpty()) {
-        const sort = req.query.categories || 'name';
-        const succulents = await db.getAllSucculents();
-
-        return res.status(400).render('index', {
-            title: 'Available Succulents',
-            succulents: succulents,
-            selected: sort,
-            errors: errs.array(),
-            failedId: id,
-        });
+        // pass error info using query params
+        return res.redirect(`/?deleteError=1&failedId=${id}`);
     }
 
     await db.deleteSucculent(id);
